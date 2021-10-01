@@ -13,27 +13,33 @@ cookie_file = open(args.filename, "r")
 # skip first line
 cookie_file.readline()
 
-dict_of_dates = {}
+cookies_from_date = []
 
+# iterate through each line of csv
 for line in cookie_file:
+	# split up data and keep only relevant information
 	components = line.split(',')
 	components[1] = components[1][:10]
-	if components[1] in dict_of_dates:
-		dict_of_dates[components[1]] += [components[0]]
-	else:
-		dict_of_dates[components[1]] = [components[0]]
+	# if the date matches the input, add cookie to list
+	if components[1] == args.d:
+		cookies_from_date += [components[0]]
 
-cookies_from_date = dict_of_dates[args.d]
-
-def find_mode(lst):
+# helper function to find mode
+def find_mode(cookies):
+	# create a dictionary to store cookies and their frequencies
 	dict_of_cookies = {}
-	for cookie in lst:
+	# iterate through cookies
+	for cookie in cookies:
+		# add cookie to dictionary or update its frequency
 		if cookie in dict_of_cookies:
 			dict_of_cookies[cookie] += 1
 		else:
 			dict_of_cookies[cookie] = 1
 	mode_values = []
+	# determine max frequency of a cookie
 	max_frequency = max(dict_of_cookies.values())
+	# iterate through all cookie/frequency pairs and add cookie to list of
+	# modes if its frequency matches max frequency
 	for cookie, frequency in dict_of_cookies.items():
 		if frequency == max_frequency:
 			mode_values += [cookie]
@@ -41,5 +47,6 @@ def find_mode(lst):
 
 list_of_modes = find_mode(cookies_from_date)
 
+# print each the most frequent cookie/cookies
 for cookie in list_of_modes:
 	print(cookie)

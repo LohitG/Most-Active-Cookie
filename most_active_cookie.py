@@ -45,6 +45,11 @@ def find_mode(cookies):
 			mode_values += [cookie]
 	return mode_values
 
+# handle a situation where there are no cookies from the specified data
+if len(cookies_from_date) == 0:
+	quit()
+
+# find_mode of the cookies from the given data
 list_of_modes = find_mode(cookies_from_date)
 
 # print each the most frequent cookie/cookies
